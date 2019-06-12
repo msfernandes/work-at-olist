@@ -9,6 +9,7 @@ name = "pypi"
 django = "*"
 django-rest-framework = "*"
 python-decouple = "*"
+python-coveralls = "*"
 
 [requires]
 python_version = "3.6"
