@@ -1,0 +1,1 @@
+web: gunicorn call_api.wsgi --chdir=src/ --log-file -
