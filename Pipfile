@@ -10,6 +10,7 @@ django = "*"
 django-rest-framework = "*"
 python-decouple = "*"
 python-coveralls = "*"
+"flake8" = "*"
 
 [requires]
 python_version = "3.6"
