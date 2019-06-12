@@ -11,6 +11,7 @@ django-rest-framework = "*"
 python-decouple = "*"
 python-coveralls = "*"
 "flake8" = "*"
+"psycopg2-binary" = "*"
 
 [requires]
 python_version = "3.6"
