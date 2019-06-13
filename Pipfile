@@ -7,13 +7,14 @@ name = "pypi"
 ipdb = "*"
 
 [packages]
-django = "*"
+Django = "*"
 django-rest-framework = "*"
 python-decouple = "*"
 python-coveralls = "*"
 "flake8" = "*"
 "psycopg2-binary" = "*"
 gunicorn = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.6"
