@@ -10,7 +10,7 @@ install:
   - "pip install pipenv"
   - "pipenv install"
 script:
-  - "pipenv run coverage run src/manage.py test"
+  - "pipenv run coverage run src/manage.py test src/"
   - "pipenv run coverage report"
   - "coveralls"
   - "pipenv run flake8 src/ --exclude=src/call_api/wsgi.py,**/migrations/**"
