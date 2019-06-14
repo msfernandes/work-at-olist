@@ -30,3 +30,30 @@ class CallRecord(models.Model):
             self.record_type,
             self.timestamp
         )
+
+
+class BillRecord(models.Model):
+    bill = models.ForeignKey(
+        'core.Bill',
+        on_delete=models.CASCADE,
+        related_name='records'
+    )
+    destination = models.CharField(max_length=11)
+    start_date = models.DateField()
+    start_time = models.TimeField()
+    duration = models.PositiveIntegerField()  # In seconds
+    price = models.FloatField()
+
+    class Meta:
+        verbose_name = "Bill Record"
+        verbose_name_plural = "Bill Records"
+
+
+class Bill(models.Model):
+    telephone = models.CharField(max_length=11)
+    period = models.DateField()
+
+    class Meta:
+        verbose_name = "Bill"
+        verbose_name_plural = "Bills"
+        unique_together = ['telephone', 'period']
