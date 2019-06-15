@@ -36,5 +36,5 @@ class BillAdmin(admin.ModelAdmin):
         'period',
     )
     list_filter = (
-        'period'
+        'period',
     )
