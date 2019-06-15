@@ -48,6 +48,13 @@ class BillRecord(models.Model):
         verbose_name = "Bill Record"
         verbose_name_plural = "Bill Records"
 
+    def __str__(self):
+        return 'Record from bill {} - {}s - price: {}'.format(
+            self.bill.id,
+            self.duration,
+            self.price
+        )
+
 
 class Bill(models.Model):
     telephone = models.CharField(max_length=11)
@@ -57,3 +64,10 @@ class Bill(models.Model):
         verbose_name = "Bill"
         verbose_name_plural = "Bills"
         unique_together = ['telephone', 'period']
+
+    def __str__(self):
+        return 'Bill {} from {} - {}'.format(
+            self.id,
+            self.telephone,
+            self.period.strftime('%m-%Y')
+        )
