@@ -16,6 +16,7 @@ python-coveralls = "*"
 gunicorn = "*"
 django-filter = "*"
 mock = "*"
+django-constance = {extras = ["database"], version = "*"}
 
 [requires]
 python_version = "3.6"

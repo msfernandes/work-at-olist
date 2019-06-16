@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'constance',
+    'constance.backends.database',
     'rest_framework',
     'django_filters',
 
@@ -75,6 +77,31 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'call_api.wsgi.application'
+
+CONSTANCE_CONFIG = {
+    'STANDARD_STANDING_CHARGE': (
+        0.36,
+        'Standing charge value to calls between 6h00 and 22h00',
+        float
+    ),
+    'STANDARD_MINUTE_CHARGE': (
+        0.09,
+        'Standing charge (per minute) value to calls between 6h00 and 22h00',
+        float
+    ),
+    'REDUCED_STANDING_CHARGE': (
+        0.36,
+        'Standing charge value to calls between 22h00 and 6h00',
+        float
+    ),
+    'REDUCED_MINUTE_CHARGE': (
+        0.0,
+        'Standing charge (per minute) value to calls between 22h00 and 6h00',
+        float
+    ),
+}
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
 
 # Database
