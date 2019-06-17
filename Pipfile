@@ -17,6 +17,7 @@ gunicorn = "*"
 django-filter = "*"
 mock = "*"
 django-constance = {extras = ["database"], version = "*"}
+django-picklefield = "*"
 
 [requires]
 python_version = "3.6"
