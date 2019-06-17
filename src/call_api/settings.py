@@ -172,5 +172,3 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     )
 }
-
-DISABLE_SIGNALS = config('DISABLE_SIGNALS', cast=bool, default=False)
