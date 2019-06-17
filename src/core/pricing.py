@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from constance import config
 from math import floor
 
@@ -41,7 +41,7 @@ class Pricing:
             self.TARIFFS['standard']['minute_charge']
         )
 
-        return price
+        return round(price, 2)
 
     def call_duration(self):
         duration = self.end - self.start
@@ -67,14 +67,16 @@ class Pricing:
             self.start.month,
             self.start.day,
             self.TARIFFS[tariff]['upper_hour_limit'],
-            0
+            0,
+            tzinfo=timezone.utc
         )
         lower_limit = datetime(
             self.start.year,
             self.start.month,
             self.start.day,
             self.TARIFFS[tariff]['lower_hour_limit'],
-            0
+            0,
+            tzinfo=timezone.utc
         )
         if tariff == 'reduced':
             lower_limit = lower_limit - timedelta(days=1)
@@ -93,14 +95,16 @@ class Pricing:
             timestamp.month,
             timestamp.day,
             cls.TARIFFS['standard']['upper_hour_limit'] - 1,
-            59
+            59,
+            tzinfo=timezone.utc
         )
         standard_lower_limit = datetime(
             timestamp.year,
             timestamp.month,
             timestamp.day,
             cls.TARIFFS['standard']['lower_hour_limit'],
-            0
+            0,
+            tzinfo=timezone.utc
         )
         upper_diff = standard_upper_limit - timestamp
         lower_diff = timestamp - standard_lower_limit
