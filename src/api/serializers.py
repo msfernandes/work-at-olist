@@ -28,6 +28,13 @@ class BillRecordSerializer(serializers.ModelSerializer):
             'price',
         )
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        minutes, seconds = divmod(data['duration'], 60)
+        hours, minutes = divmod(minutes, 60)
+        data['duration'] = '{}h{}m{}s'.format(hours, minutes, seconds)
+        return data
+
 
 class BillSerializer(serializers.ModelSerializer):
     records = BillRecordSerializer(many=True, read_only=True)
