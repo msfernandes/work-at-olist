@@ -1,9 +1,9 @@
-from rest_framework import viewsets, mixins, exceptions
+from rest_framework import viewsets, mixins
 from django_filters import rest_framework as django_filters, FilterSet
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from datetime import datetime
-from api import serializers
+from api import serializers, exceptions
 from core import models
 
 
@@ -44,10 +44,7 @@ class BillRetrieveViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
                     period=period
                 )
             except ValueError:
-                raise exceptions.APIException(
-                    detail='Invalid period format',
-                    code=400
-                )
+                raise exceptions.InvalidPeriodFormat()
         else:
             bills = models.Bill.objects.filter(
                 telephone=self.kwargs['telephone'],
