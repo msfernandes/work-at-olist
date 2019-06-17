@@ -46,3 +46,8 @@ class BillSerializer(serializers.ModelSerializer):
             'period',
             'records'
         )
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['period'] = instance.period.strftime('%Y-%m')
+        return data
