@@ -14,3 +14,26 @@ class CallRecordSerializer(ModelSerializer):
             'source',
             'destination',
         )
+
+
+class BillRecordSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.BillRecord
+        fields = (
+            'destination',
+            'start_date',
+            'start_time',
+            'duration',
+            'price',
+        )
+
+
+class BillSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.Bill
+        fields = (
+            'telephone',
+            'period',
+        )
