@@ -1,8 +1,8 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from core import models
 
 
-class CallRecordSerializer(ModelSerializer):
+class CallRecordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.CallRecord
@@ -16,7 +16,7 @@ class CallRecordSerializer(ModelSerializer):
         )
 
 
-class BillRecordSerializer(ModelSerializer):
+class BillRecordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.BillRecord
@@ -29,11 +29,13 @@ class BillRecordSerializer(ModelSerializer):
         )
 
 
-class BillSerializer(ModelSerializer):
+class BillSerializer(serializers.ModelSerializer):
+    records = BillRecordSerializer(many=True, read_only=True)
 
     class Meta:
         model = models.Bill
         fields = (
             'telephone',
             'period',
+            'records'
         )
