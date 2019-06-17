@@ -20,6 +20,9 @@ class Pricing:
     }
 
     def __init__(self, start_timestamp, end_timestamp):
+        if start_timestamp > end_timestamp:
+            start_timestamp, end_timestamp = end_timestamp, start_timestamp
+
         self.start = start_timestamp
         self.end = end_timestamp
 
