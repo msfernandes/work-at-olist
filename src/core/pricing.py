@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from constance import config
 from math import floor
 
@@ -28,7 +28,7 @@ class Pricing:
 
     def call_price(self):
         durations = self.duration_by_tariff()
-        end_tariff = self._check_tariff(self.end)
+        end_tariff = self.check_tariff(self.end)
         price = getattr(config, self.TARIFFS[end_tariff]['standing_charge'])
 
         price += floor(durations['reduced'] / 60) * getattr(
@@ -48,8 +48,8 @@ class Pricing:
         return duration.seconds
 
     def duration_by_tariff(self):
-        start_tariff = self._check_tariff(self.start)
-        end_tariff = self._check_tariff(self.end)
+        start_tariff = self.check_tariff(self.start)
+        end_tariff = self.check_tariff(self.end)
         duration = self.call_duration()
 
         durations = {'standard': 0, 'reduced': 0}
@@ -57,48 +57,49 @@ class Pricing:
         if start_tariff == end_tariff:
             durations[start_tariff] = duration
         else:
-            durations[start_tariff] = self.tariff_duration(
-                start_tariff,
-                self.start,
-            )
+            durations[start_tariff] = self.start_tariff_duration(start_tariff)
             durations[end_tariff] = duration - durations[start_tariff]
         return durations
 
-    def tariff_duration(self, tariff, timestamp):
-        if timestamp == self.start:
-            limit = datetime(
-                timestamp.year,
-                timestamp.month,
-                timestamp.day,
-                self.TARIFFS[tariff]['upper_hour_limit'],
-                0
-            )
-            diff = limit - timestamp
+    def start_tariff_duration(self, tariff):
+        upper_limit = datetime(
+            self.start.year,
+            self.start.month,
+            self.start.day,
+            self.TARIFFS[tariff]['upper_hour_limit'],
+            0
+        )
+        lower_limit = datetime(
+            self.start.year,
+            self.start.month,
+            self.start.day,
+            self.TARIFFS[tariff]['lower_hour_limit'],
+            0
+        )
+        if tariff == 'reduced':
+            lower_limit = lower_limit - timedelta(days=1)
+
+        if lower_limit <= self.start < upper_limit:
+            diff = upper_limit - self.start
         else:
-            limit = datetime(
-                timestamp.year,
-                timestamp.month,
-                timestamp.day,
-                self.TARIFFS[tariff]['lower_hour_limit'],
-                0
-            )
-            diff = timestamp - limit
+            diff = self.start - self.start
 
         return diff.total_seconds()
 
-    def _check_tariff(self, timestamp):
+    @classmethod
+    def check_tariff(cls, timestamp):
         standard_upper_limit = datetime(
             timestamp.year,
             timestamp.month,
             timestamp.day,
-            22,
-            0
+            cls.TARIFFS['standard']['upper_hour_limit'] - 1,
+            59
         )
         standard_lower_limit = datetime(
             timestamp.year,
             timestamp.month,
             timestamp.day,
-            6,
+            cls.TARIFFS['standard']['lower_hour_limit'],
             0
         )
         upper_diff = standard_upper_limit - timestamp
