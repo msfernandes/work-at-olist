@@ -32,7 +32,8 @@ class CallRecordViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         openapi.Parameter(
             "period",
             openapi.IN_QUERY,
-            description='Format: YYYY-MM',
+            description='Format: YYYY-MM. If not defined will return the last'
+                        ' closed bill.',
             required=False,
             type=openapi.TYPE_STRING
         )
