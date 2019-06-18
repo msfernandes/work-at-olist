@@ -1,3 +1,6 @@
+from django.utils.decorators import method_decorator
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 from rest_framework import viewsets, mixins
 from django_filters import rest_framework as django_filters, FilterSet
 from django.shortcuts import get_object_or_404
@@ -24,6 +27,17 @@ class CallRecordViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     filter_class = CallRecordFilter
 
 
+@method_decorator(name='retrieve', decorator=swagger_auto_schema(
+    manual_parameters=[
+        openapi.Parameter(
+            "period",
+            openapi.IN_QUERY,
+            description='Format: YYYY-MM',
+            required=False,
+            type=openapi.TYPE_STRING
+        )
+    ]
+))
 class BillRetrieveViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     queryset = models.Bill.objects.all()

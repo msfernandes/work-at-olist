@@ -18,6 +18,7 @@ django-filter = "*"
 mock = "*"
 django-constance = {extras = ["database"], version = "*"}
 django-picklefield = "*"
+drf-yasg = "*"
 
 [requires]
 python_version = "3.6"

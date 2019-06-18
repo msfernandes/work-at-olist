@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'constance.backends.database',
     'rest_framework',
     'django_filters',
+    'drf_yasg',
 
     'core'
 ]
