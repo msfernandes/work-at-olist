@@ -1,12 +1,12 @@
 from django.test import TestCase
-from datetime import datetime, date, time
+from datetime import datetime, date, time, timezone
 from core import models
 
 
 class CallRecordTestCase(TestCase):
 
     def test_str(self):
-        timestamp = datetime(2019, 1, 1, 0, 0)
+        timestamp = datetime(2019, 1, 1, 0, 0, tzinfo=timezone.utc)
         record = models.CallRecord.objects.create(
             call_id=1,
             record_type=models.CallRecord.START,
@@ -17,7 +17,7 @@ class CallRecordTestCase(TestCase):
 
         self.assertEqual(
             record.__str__(),
-            'Call 1 - start <2019-01-01 00:00:00>'
+            'Call 1 - start <2019-01-01 00:00:00+00:00>'
         )
 
 
