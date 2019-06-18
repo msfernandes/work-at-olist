@@ -49,7 +49,7 @@ class BillRetrieveViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             bills = models.Bill.objects.filter(
                 telephone=self.kwargs['telephone'],
                 period__lt=default_period.date()
-            ).order_by('period')
+            ).order_by('-period')
             bill = bills.first()
             if bill:
                 return bill
