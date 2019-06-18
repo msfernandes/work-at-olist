@@ -19,6 +19,7 @@ mock = "*"
 django-constance = {extras = ["database"], version = "*"}
 django-picklefield = "*"
 drf-yasg = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.6"
