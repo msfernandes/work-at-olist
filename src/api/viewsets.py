@@ -14,7 +14,7 @@ class CallRecordFilter(FilterSet):
         fields = ['call_id', 'record_type', 'source']
 
 
-class CallRecordViewSet(viewsets.ModelViewSet):
+class CallRecordViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
     queryset = models.CallRecord.objects.all()
     serializer_class = serializers.CallRecordSerializer
